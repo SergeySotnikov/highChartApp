@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {StockChart} from "angular-highcharts";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-chart1',
   templateUrl: './chart1.component.html',
   styleUrls: ['./chart1.component.scss'],
 })
-export class Chart1Component implements OnInit {
+export class Chart1Component implements OnInit, OnDestroy {
   ohlc: any[] = [];
   volume: any[] = [];
   dataLineChart: any[] = [];
@@ -15,6 +16,7 @@ export class Chart1Component implements OnInit {
   public forexLineChart!: StockChart;
   public forexCandlestickChart!: StockChart;
   public forexCandlestickChartAndValue!: StockChart;
+  private subscription!: Subscription;
 
   constructor(private apiService: ApiService) {
   }
@@ -23,8 +25,12 @@ export class Chart1Component implements OnInit {
     this.getData()
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   private getData() {
-    this.apiService.get("api-v3/forex/history").subscribe((res: any) => {
+    this.subscription = this.apiService.get("api-v3/forex/history").subscribe((res: any) => {
       this.dataLineChart = this.convertDataForLineChart(Object.values(res.response));
       this.dataCandlestickChart = this.convertDataForCandlestickChart(Object.values(res.response));
       this.convertDataForCandlestickChartAddValue(this.dataCandlestickChart)
