@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {StockChart} from "angular-highcharts";
 import {Subscription} from "rxjs";
+import {commonChartOptions} from "./const/constant";
 
 @Component({
   selector: 'app-chart1',
@@ -36,19 +37,11 @@ export class Chart1Component implements OnInit, OnDestroy {
       this.convertDataForCandlestickChartAddValue(this.dataCandlestickChart)
 
       this.forexLineChart = new StockChart({
-        chart: {
-          height: 600
-        },
-        rangeSelector: {
-          selected: 2
-        },
+        ...commonChartOptions,
         title: {
           text: `${res.info.symbol} Line Daily Chart`
         },
         series: [{
-          tooltip: {
-            valueDecimals: 4
-          },
           type: "line",
           name: `${res.info.symbol}`,
           data: this.dataLineChart
@@ -56,19 +49,11 @@ export class Chart1Component implements OnInit, OnDestroy {
       })
 
       this.forexCandlestickChart = new StockChart({
-        chart: {
-          height: 600
-        },
-        rangeSelector: {
-          selected: 2
-        },
+        ...commonChartOptions,
         title: {
           text: `${res.info.symbol} Candlestick Daily Chart`
         },
         series: [{
-          tooltip: {
-            valueDecimals: 4
-          },
           type: "candlestick",
           name: `${res.info.symbol}`,
           data: this.dataCandlestickChart
@@ -77,12 +62,7 @@ export class Chart1Component implements OnInit, OnDestroy {
 
 
       this.forexCandlestickChartAndValue = new StockChart({
-        chart: {
-          height: 600
-        },
-        rangeSelector: {
-          selected: 2
-        },
+        ...commonChartOptions,
         title: {
           text: `${res.info.symbol} Candlestick and Value Daily Chart`
         },
@@ -122,17 +102,11 @@ export class Chart1Component implements OnInit, OnDestroy {
           type: 'candlestick',
           name: `${res.info.symbol}`,
           data: this.ohlc,
-          // dataGrouping: {
-          //   units: groupingUnits
-          // }
         }, {
           type: 'column',
           name: 'Volume',
           data: this.volume,
           yAxis: 1,
-          // dataGrouping: {
-          //   units: groupingUnits
-          // }
         }]
       })
     })
