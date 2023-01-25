@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ApiService {
   private apiUrl = 'https://fcsapi.com/';
-  private apiKey = 'ZbWrsQu69Ax5MQXsBeyPFh';
+  private apiKey = '9w01kBSNPUJyETszjXEm';
   private params = {
     symbol: 'EUR/USD',
     period: '1d',
