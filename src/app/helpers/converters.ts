@@ -5,13 +5,12 @@ export const convertDataForCandlestickChart = (arr: any[]) => arr.map(({
                                                                          o,
                                                                          h,
                                                                          l,
-                                                                         c,
-                                                                         v
-                                                                       }) => [new Date(tm).getTime(), Number(o), Number(h), Number(l), Number(c), Number(v)]);
+                                                                         c
+                                                                       }) => [new Date(tm).getTime(), Number(o), Number(h), Number(l), Number(c)]);
 
 export const convertDataForCandlestickChartAddValue = (data: any[]) => {
   return {
-    ohlc: data.map(([t, o, h, l, c]) => [t, o, h, l, c]),
-    volume: data.map(([t, v]) => [t, v])
+    ohlc: data.map(({tm, o, h, l, c}) => [new Date(tm).getTime(), Number(o), Number(h), Number(l), Number(c)]),
+    volume: data.map(({tm, v}) => [new Date(tm).getTime(), Number(v)])
   };
 };
